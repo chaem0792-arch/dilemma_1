@@ -1,0 +1,457 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
+<title>인공지능 윤리 딜레마 활동지</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap">
+<style>
+/* Layout: the worksheet itself is the app. A4 paper sheets (794px = A4 @96dpi) on a desk, inputs sit where the blanks are. Single paper look by choice. */
+:root {
+  --green: #2f7d57;       /* label cells, headings */
+  --green-dark: #457b5a;  /* banners */
+  --green-ink: #286448;   /* activity titles */
+  --green-tint: #e3efe8;  /* row label cells */
+  --line: #c9d6ce;        /* box borders */
+  --ink: #222a26;
+  --muted: #5d6862;
+  --desk: #e6ebe8;
+  --paper: #ffffff;
+  --focus: #e9a23b;
+  --warn: #b3412e;
+  --font: "Noto Sans KR", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { background: var(--desk); color: var(--ink); font-family: var(--font); margin: 0; -webkit-font-smoothing: antialiased; }
+
+/* toolbar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--green-ink); color: #fff;
+  padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 21; background: var(--green-ink); }
+.bar-in { max-width: 794px; margin: 0 auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.bar-title { font-weight: 700; font-size: 15px; flex: 1 1 auto; min-width: 0; }
+.bar-title small { display: block; font-weight: 400; font-size: 12px; opacity: .8; }
+.btn { font: inherit; font-size: 14px; border-radius: 6px; padding: 8px 14px; cursor: pointer; border: 1px solid rgba(255,255,255,.5); background: transparent; color: #fff; }
+.btn.primary { background: #fff; color: var(--green-ink); border-color: #fff; font-weight: 700; }
+.btn:focus-visible, .field:focus-visible, summary:focus-visible, .pick:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.btn[disabled] { opacity: .6; cursor: progress; }
+
+.desk { padding-block: 24px 60px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 24px; justify-items: center; }
+.notice { max-width: 794px; width: 100%; font-size: 13px; color: var(--muted); line-height: 1.6; }
+.notice b { color: var(--green-ink); }
+
+/* paper */
+.paper { position: relative; width: 100%; max-width: 794px; min-height: 1123px; background: var(--paper); box-shadow: 0 2px 10px rgba(30,60,45,.12);
+  padding: 46px 44px 70px; overflow: hidden; font-size: 13px; line-height: 1.5; }
+.wm { position: absolute; right: -170px; top: 640px; transform: rotate(-90deg); transform-origin: center; width: 420px; text-align: center;
+  font-size: 40px; font-weight: 300; color: #ededed; letter-spacing: 2px; white-space: nowrap; pointer-events: none; user-select: none; z-index: 0; }
+.paper > *:not(.wm) { position: relative; z-index: 1; }
+.foot { position: absolute !important; right: 44px; bottom: 26px; font-size: 10px; color: #b9bdbb; letter-spacing: .5px; }
+
+.banner { background: var(--green-dark); color: #fff; border-radius: 10px; padding: 12px 18px 16px; }
+.banner .school { font-size: 11px; font-weight: 700; }
+.banner h1 { margin: 2px 0 0; text-align: center; font-size: 20px; font-weight: 700; text-wrap: balance; }
+
+table { border-collapse: collapse; width: 100%; }
+.info { margin-top: 14px; border: 1px solid var(--line); }
+.info td { border: 1px solid var(--line); height: 28px; padding: 0; }
+.info th { background: var(--green); color: #fff; font-weight: 500; font-size: 11px; width: 13%; border: 1px solid #fff; }
+.info td .field { height: 100%; }
+
+.guide { margin-top: 18px; background: var(--green-dark); color: #fff; border-radius: 10px; padding: 14px 18px; font-size: 12px; line-height: 1.75; }
+
+.act { margin-top: 30px; }
+.act-h { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; flex-wrap: wrap; border-bottom: 2px solid var(--green); padding-bottom: 5px; }
+.act-h h2 { margin: 0; font-size: 15px; color: var(--green-ink); font-weight: 700; }
+.act-h .hint { font-size: 11px; color: var(--muted); }
+.act-desc { font-size: 11.5px; color: var(--ink); margin: 8px 0 0 6px; }
+.q { margin: 18px 0 6px; font-size: 12.5px; font-weight: 700; }
+
+.box { border: 1px solid var(--line); }
+.box .field { min-height: inherit; }
+.h68 { min-height: 68px; } .h145 { min-height: 145px; } .h120 { min-height: 120px; }
+
+.rows td, .rows th { border: 1px solid var(--line); }
+.rows th { background: var(--green-tint); font-weight: 500; font-size: 12px; color: #444; }
+.who th { width: 11%; height: 58px; }
+.stake thead th { height: 30px; font-size: 12px; }
+.stake tbody th { width: 21%; height: 50px; }
+.stake td { width: 39.5%; }
+.persp thead th { height: 46px; line-height: 1.4; }
+.persp tbody th { width: 17%; height: 72px; text-align: left; padding: 6px 10px; vertical-align: middle; font-weight: 500; }
+.persp .pl { display: flex; align-items: center; gap: 4px; }
+.persp .pl > span { white-space: nowrap; }
+.persp .pl .fv.inline, .persp .nm .fv.inline { flex: 1; min-width: 0; text-align: left; }
+.persp .pl .field { flex: 1; min-width: 0; }
+.persp .nm { display: flex; align-items: center; gap: 2px; margin-top: 2px; }
+.persp .nm .field { flex: 1; min-width: 0; }
+.etc { display: inline-flex; align-items: center; gap: 2px; }
+.etc .field { width: 80px; }
+
+.checks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 12px; margin: 14px 4px 16px; font-size: 12.5px; font-weight: 500; }
+.checks label { display: flex; align-items: center; gap: 7px; cursor: pointer; }
+.checks input { width: 15px; height: 15px; margin: 0; accent-color: var(--green); }
+
+/* fields */
+.field { display: block; width: 100%; border: 0; background: rgba(47,125,87,.035); font: inherit; font-size: 13px; color: var(--ink); padding: 7px 10px; resize: none; line-height: 1.55; border-radius: 0; }
+.field:hover { background: rgba(47,125,87,.07); }
+.field::placeholder { color: #a9b3ae; }
+textarea.field { overflow: hidden; }
+.mini { padding: 1px 4px; font-size: 12px; background: rgba(47,125,87,.06); border-bottom: 1px solid var(--line); }
+td > .field { min-height: inherit; height: 100%; }
+.who td, .stake td, .persp td { vertical-align: top; }
+
+/* reference toggle */
+.ref { margin: 12px 0 0; border: 1px solid var(--line); border-radius: 8px; background: #f6faf8; }
+.ref summary { cursor: pointer; padding: 10px 14px; font-weight: 700; font-size: 13px; color: var(--green-ink); list-style: none; display: flex; align-items: center; gap: 8px; }
+.ref summary::-webkit-details-marker { display: none; }
+.ref summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform .15s; }
+.ref[open] summary::before { transform: rotate(45deg); }
+.ref summary span { font-weight: 400; color: var(--muted); font-size: 12px; }
+.ref-body { padding: 0 14px 14px; }
+.ref-body > p { margin: 0 0 10px; font-size: 12px; color: var(--muted); }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; font-size: 11.5px; line-height: 1.55; display: flex; flex-direction: column; gap: 4px; }
+.card h3 { margin: 0; font-size: 12.5px; color: var(--green-ink); }
+.card .d { margin: 0; color: #444; }
+.card .k { margin: 0; color: #c0392b; font-weight: 500; }
+.pick { align-self: flex-start; margin-top: 4px; font: inherit; font-size: 11px; padding: 3px 9px; border: 1px solid var(--green); color: var(--green); background: #fff; border-radius: 4px; cursor: pointer; }
+.pick:hover { background: var(--green-tint); }
+
+/* toast & confirm */
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: #1f3a2c; color: #fff; padding: 10px 18px; border-radius: 8px; font-size: 13px; z-index: 50; max-width: calc(100% - 32px); }
+.overlay { position: fixed; inset: 0; background: rgba(20,30,25,.45); z-index: 60; display: grid; place-items: center; padding: 16px; }
+.dialog { background: #fff; border-radius: 10px; padding: 20px; max-width: 360px; width: 100%; display: grid; gap: 14px; font-size: 14px; line-height: 1.6; }
+.dialog .acts { display: flex; justify-content: flex-end; gap: 8px; }
+.dialog .btn { color: var(--ink); border-color: var(--line); }
+.dialog .btn.danger { background: var(--warn); color: #fff; border-color: var(--warn); }
+.dialog .btn.ok { background: var(--green); color: #fff; border-color: var(--green); }
+
+/* print-render values (used only in the offscreen copy for the PDF) */
+.fv { white-space: pre-wrap; word-break: break-all; font-size: 13px; line-height: 1.55; padding: 7px 10px; min-height: inherit; color: #111; }
+.fv.inline { padding: 0 4px; display: inline-block; min-width: 70px; text-align: center; font-weight: 400; font-size: 12px; }
+.fv.cell { display: flex; align-items: center; height: 100%; padding: 0 10px; }
+.cbx { width: 13px; height: 13px; border: 1.5px solid #333; display: inline-block; position: relative; flex: none; }
+.cbx.on::after { content: ""; position: absolute; left: 3px; top: -1px; width: 4px; height: 8px; border-right: 2px solid #111; border-bottom: 2px solid #111; transform: rotate(40deg); }
+#stage { position: fixed; left: -12000px; top: 0; width: 794px; }
+#stage .paper { width: 794px; max-width: none; box-shadow: none; }
+
+@media (max-width: 640px) {
+  .paper { min-height: 0; padding: 26px 16px 56px; }
+  .foot { right: 16px; }
+  .wm { display: none; }
+  .info, .info tbody, .info tr { display: grid; }
+  .info tr { grid-template-columns: 76px 1fr; }
+  .info th, .info td { width: auto; height: 36px; display: flex; align-items: center; justify-content: center; }
+  .info td { justify-content: stretch; }
+  .info td[colspan] { grid-column: auto; }
+  .checks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cards { grid-template-columns: 1fr; }
+  .stake tbody th { width: 26%; font-size: 11px; }
+  .persp tbody th { width: 30%; font-size: 11.5px; }
+  .who th { width: 20%; }
+  .etc { flex-wrap: wrap; justify-content: center; }
+  .etc .field { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<header class="bar">
+  <div class="bar-in">
+    <div class="bar-title">인공지능 윤리적 딜레마 토의 · 1차시 활동지<small id="status">입력란에만 작성할 수 있어요. 작성 내용은 이 기기에 자동 저장됩니다.</small></div>
+    <button class="btn" id="reset" type="button">초기화</button>
+    <button class="btn primary" id="save" type="button">PDF로 저장</button>
+  </div>
+</header>
+
+<main class="desk" id="desk">
+  <p class="notice">문항과 안내 문구는 고칠 수 없고, 연한 초록 칸에만 입력할 수 있습니다. 다 쓰면 <b>PDF로 저장</b>을 눌러 원래 활동지 모양의 완성본을 내려받으세요.</p>
+
+  <!-- PAGE 1 -->
+  <section class="paper" data-page="1">
+    <div class="wm" aria-hidden="true">중앙여자고등학교 채민서T</div>
+    <div class="banner">
+      <div class="school">중앙여자고등학교 2026 인공지능기초</div>
+      <h1>인공지능 윤리적 딜레마에 관해 고찰하기_1차시</h1>
+    </div>
+
+    <table class="info">
+      <tbody>
+        <tr><th scope="row">분반</th><td><input class="field" id="f-class" data-f="class" autocomplete="off" aria-label="분반"></td>
+            <th scope="row">모둠명</th><td><input class="field" id="f-team" data-f="team" autocomplete="off" aria-label="모둠명"></td></tr>
+        <tr><th scope="row">학번</th><td><input class="field" id="f-sid" data-f="sid" inputmode="numeric" autocomplete="off" aria-label="학번"></td>
+            <th scope="row">이름</th><td><input class="field" id="f-name" data-f="name" autocomplete="off" aria-label="이름"></td></tr>
+        <tr><th scope="row">참여 일자</th><td colspan="3"><input class="field" type="date" id="f-date" data-f="date" aria-label="참여 일자"></td></tr>
+      </tbody>
+    </table>
+
+    <div class="guide">
+      1차시: 사례 선정 → 개인 생각 정리 및 작성 → 딜레마 상황 정의 및 분석<br>
+      2차시: 공존을 위한 규약 토의 → 활동지 정리 및 동료평가 → 발표 및 마무리<br>
+      AI는 사용하지 않습니다(사용 적발 시 &nbsp;0점 처리). 참고 페이지와 모둠원의 생각을 바탕으로 작성합니다.<br>
+      모둠원 모두 윤리 관점 1개씩을 맡아 토의합니다. 학습지에는 4개(모둠 인원에 따라 5개) 관점을 모두 적습니다.
+    </div>
+
+    <div class="act">
+      <div class="act-h"><h2>활동 1-1. 인공지능 활용 사례 선정</h2><span class="hint">참고 페이지 사례카드 중 하나를 고르거나, 다른 사례를 선택하세요.</span></div>
+
+      <details class="ref" id="ref" data-noprint>
+        <summary>참고0. 사례 카드 보기 <span>눌러서 펼치기 / 접기</span></summary>
+        <div class="ref-body">
+          <p>아래 사례 중 하나를 골라 활동을 진행하세요. 아래 내용이 아닌 사례를 작성해도 무방합니다. 각자의 경험과 생각을 더해 토의하세요.</p>
+          <div class="cards" id="cards"></div>
+        </div>
+      </details>
+
+      <p class="q">1) 인공지능 활용 분야 / 서비스명:</p>
+      <div class="box h68"><textarea class="field" id="f-service" data-f="service" rows="2" aria-label="인공지능 활용 분야 / 서비스명"></textarea></div>
+
+      <p class="q">2) 해당 인공지능의 주요 기능과 구체적 활용 모습 (누가, 어디서, 어떻게 쓰는가)</p>
+      <table class="rows who">
+        <tbody>
+          <tr><th scope="row">누가</th><td><textarea class="field" id="f-who" data-f="who" rows="2" aria-label="누가"></textarea></td></tr>
+          <tr><th scope="row">어디서</th><td><textarea class="field" id="f-where" data-f="where" rows="2" aria-label="어디서"></textarea></td></tr>
+          <tr><th scope="row">어떻게</th><td><textarea class="field" id="f-how" data-f="how" rows="2" aria-label="어떻게"></textarea></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="act">
+      <div class="act-h"><h2>활동 1-2. 생각 정리하기 (개인)</h2></div>
+      <p class="q">1) 이 인공지능을 사용할 때 걱정되는 점 한 가지와 그 이유</p>
+      <div class="box h145"><textarea class="field" id="f-worry" data-f="worry" rows="5" aria-label="걱정되는 점 한 가지와 그 이유"></textarea></div>
+    </div>
+
+    <div class="foot">인공지능 윤리적 딜레마 토의 수행평가 &nbsp;1 / 4</div>
+  </section>
+
+  <!-- PAGE 2 -->
+  <section class="paper" data-page="2">
+    <div class="wm" aria-hidden="true">중앙여자고등학교 채민서T</div>
+
+    <div class="act" style="margin-top:0">
+      <div class="act-h"><h2>활동 2-1. 윤리적 딜레마 상황 정의</h2></div>
+      <p class="q">1) 딜레마 상황 정의하기</p>
+      <div class="box h120"><textarea class="field" id="f-dilemma" data-f="dilemma" rows="4" aria-label="딜레마 상황 정의하기"></textarea></div>
+
+      <p class="q">2) 각각의 관점에서 분석하기</p>
+      <table class="rows stake">
+        <thead><tr><th scope="col">이해관계자</th><th scope="col">원하는 것 / 입장</th><th scope="col">걱정하는 것 / 갈등 요소</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">사용자</th><td><textarea class="field" id="f-s1w" data-f="s1w" rows="2" aria-label="사용자 원하는 것"></textarea></td><td><textarea class="field" id="f-s1c" data-f="s1c" rows="2" aria-label="사용자 걱정하는 것"></textarea></td></tr>
+          <tr><th scope="row">개발자·기업</th><td><textarea class="field" id="f-s2w" data-f="s2w" rows="2" aria-label="개발자·기업 원하는 것"></textarea></td><td><textarea class="field" id="f-s2c" data-f="s2c" rows="2" aria-label="개발자·기업 걱정하는 것"></textarea></td></tr>
+          <tr><th scope="row">사회 (정부·시민 등)</th><td><textarea class="field" id="f-s3w" data-f="s3w" rows="2" aria-label="사회 원하는 것"></textarea></td><td><textarea class="field" id="f-s3c" data-f="s3c" rows="2" aria-label="사회 걱정하는 것"></textarea></td></tr>
+          <tr><th scope="row"><span class="etc">기타(<input class="field mini" id="f-s4n" data-f="s4n" autocomplete="off" aria-label="기타 이해관계자">)</span></th><td><textarea class="field" id="f-s4w" data-f="s4w" rows="2" aria-label="기타 원하는 것"></textarea></td><td><textarea class="field" id="f-s4c" data-f="s4c" rows="2" aria-label="기타 걱정하는 것"></textarea></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="act">
+      <div class="act-h"><h2>활동 2-2. 인공지능 윤리 관점 분석</h2></div>
+      <p class="act-desc">분석한 관점에 체크하고,각 관점에서 생기는 딜레마를 분석하세요. 해당 관점을 맡은 친구의 이름도 적습니다.</p>
+      <div class="checks" id="checks"></div>
+
+      <table class="rows persp">
+        <thead><tr><th scope="col">윤리 관점<br>(담당자 이름)</th><th scope="col">무엇이 문제인가? (사례 속 구체적 장면)</th></tr></thead>
+        <tbody id="persp"></tbody>
+      </table>
+    </div>
+
+    <div class="foot">인공지능 윤리적 딜레마 토의 수행평가 &nbsp;2 / 4</div>
+  </section>
+</main>
+
+<div id="stage" aria-hidden="true"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+(function () {
+  const CASES = [
+    ["① 자율주행 자동차", "센서와 카메라로 도로 상황을 인식하고 스스로 운전한다. 교통사고를 줄이고 운전이 어려운 사람의 이동을 도울 수 있다.", "피할 수 없는 사고 상황에서 탑승자와 보행자 중 누구를 우선 보호해야 할까? 사고가 나면 책임은 누구에게 있을까?"],
+    ["② AI 채용 시스템", "지원서와 면접 영상을 분석해 지원자를 평가하고 추천한다. 많은 지원자를 빠르고 일관되게 심사할 수 있다.", "과거 합격자 데이터에 편향이 있다면? 탈락한 지원자가 이유를 알 수 없다면?"],
+    ["③ AI 스포츠 심판", "카메라와 센서로 공의 위치와 선수의 움직임을 분석해 판정한다. 프로야구 자동 볼 판정처럼 오심을 줄이고 경기를 공정하게 운영할 수 있다.", "AI 판정과 사람 심판의 판단이 다르면 누구를 따라야 할까? 판정이 정확해지면 사람 심판의 역할은 어떻게 될까?"],
+    ["④ 생성형 AI 창작", "글, 그림, 음악 등을 짧은 시간에 만들어 준다. 누구나 쉽게 창작 활동에 참여할 수 있다.", "학습에 쓰인 작품의 창작자 권리는? AI가 만든 작품을 내 작품이라고 할 수 있을까?"],
+    ["⑤ 얼굴 인식 CCTV", "공공장소의 영상에서 얼굴을 인식해 범죄자나 실종자를 찾는다. 수사와 안전 관리에 도움이 된다.", "안전을 위해 모든 시민의 얼굴 정보를 수집해도 될까? 잘못 인식되어 억울한 사람이 생긴다면?"],
+    ["⑥ AI 학습 도우미", "학생의 풀이 기록을 분석해 수준에 맞는 문제와 설명을 제공한다. 개인 맞춤 학습이 가능해진다.", "학습 기록은 누가 볼 수 있어야 할까? AI가 대신 과제를 해 준다면 배움은 어떻게 될까?"],
+    ["⑦ AI 챗봇", "질문에 자연스럽게 답하고 고민 상담이나 정보 검색을 돕는다. 언제든 개인 맞춤 대화를 할 수 있다.", "챗봇이 틀린 정보나 상처 주는 말을 했다면 누구의 잘못일까? 챗봇의 말은 어디까지 믿어도 될까?"],
+    ["⑧ 딥페이크", "실제 사람의 얼굴과 목소리를 똑같이 합성해 영상이나 음성을 만든다. 영화나 광고 제작 비용을 줄일 수 있다.", "진짜와 구별할 수 없는 가짜 영상이 퍼진다면? 이 기술은 어디까지 허용되어야 할까?"],
+    ["⑨ AI 대출 심사", "소득과 거래 기록 등을 분석해 대출 승인 여부와 금리를 자동으로 정한다. 심사를 빠르고 일관되게 할 수 있다.", "대출을 거절당한 사람이 이유를 물으면 어떻게 답해야 할까? AI의 판단 기준은 공개되어야 할까?"],
+    ["⑩ 응급실 중증도 분류 AI", "응급 환자의 증상과 검사 결과를 분석해 치료 순서를 정하도록 돕는다. 부족한 의료 인력과 자원을 효율적으로 쓸 수 있다.", "생명이 걸린 치료 순서를 AI가 정해도 될까? 순서에서 밀린 환자는 어떻게 받아들일까?"],
+    ["⑪ SNS 추천 알고리즘", "시청 기록과 반응을 분석해 좋아할 만한 영상과 게시물을 보여 준다. 원하는 정보를 쉽고 빠르게 찾을 수 있다.", "좋아하는 것만 계속 보는 것이 나에게 좋은 일일까? 내 기록은 어디까지 분석되어도 될까?"],
+    ["⑫ AI 스마트 의류", "섬유 속 센서가 심박수, 체온, 자세를 측정하고 AI가 건강 상태를 분석한다. 운동 관리나 환자, 현장 노동자의 안전 관리에 쓰일 수 있다.", "옷이 모은 내 몸의 정보는 누구의 것일까? 회사가 직원에게 이 옷을 입도록 한다면?"],
+    ["⑬ 교실 집중도 분석 AI", "카메라로 학생의 표정과 자세를 분석해 수업 집중도를 교사에게 알려 준다. 도움이 필요한 학생을 빨리 찾을 수 있다.", "학습을 돕기 위해 내 얼굴과 표정을 어디까지 분석해도 될까? 감시받는 느낌은 수업에 어떤 영향을 줄까?"],
+    ["⑭ 노인 돌봄 AI", "혼자 사는 노인과 대화하고 약 복용 시간을 알리며 위급 상황을 신고한다. 돌봄 인력이 부족한 문제를 덜 수 있다.", "AI에게 마음을 기대는 것은 괜찮을까? 집안의 대화와 생활은 어디까지 기록되어도 될까?"],
+    ["⑮ AI 스마트 가전", "로봇청소기, 냉장고, 스피커 등이 집 안의 소리와 모습을 인식해 스스로 작동한다. 집안일을 줄이고 전기를 아껴 쓸 수 있다.", "편리함을 위해 집 안의 모습과 대화가 기록되어도 될까? 가전이 해킹되거나 오작동하면 책임은 누구에게 있을까?"],
+    ["⑯ AI 판결 보조 시스템", "과거 판결문과 사건 기록을 분석해 판사에게 형량이나 재범 위험도를 제안한다. 재판을 빠르고 일관되게 진행할 수 있다.", "사람의 운명을 가르는 판단에 AI가 참여해도 될까? AI의 제안이 판사의 판단에 얼마나 영향을 주어도 될까?"]
+  ];
+  const VIEWS = ["신뢰성 (오작동·정확성)", "공정성 (편향·차별 방지)", "윤리성 (도덕적 가치)", "투명성 (설명 가능성)", "안전성 (생명·정보 보호)", "책무성 (사고 책임 주체)"];
+  const KEY = "ai-ethics-ws-1-v1";
+  const $ = (s, r = document) => r.querySelector(s);
+
+  // build reference cards
+  const cards = $("#cards");
+  CASES.forEach(([t, d, k]) => {
+    const c = document.createElement("article");
+    c.className = "card";
+    c.innerHTML = '<h3></h3><p class="d"></p><p class="k"></p><button type="button" class="pick">이 사례로 쓰기</button>';
+    c.querySelector("h3").textContent = t;
+    c.querySelector(".d").textContent = d;
+    c.querySelector(".k").textContent = k;
+    c.querySelector(".pick").addEventListener("click", () => {
+      const f = $("#f-service");
+      const name = t.replace(/^[^\s]+\s/, "");
+      const apply = () => { f.value = name; grow(f); save(); $("#ref").open = false; f.scrollIntoView({ block: "center", behavior: "smooth" }); f.focus({ preventScroll: true }); toast("‘" + name + "’을(를) 서비스명 칸에 넣었습니다. 자유롭게 고쳐 쓰세요."); };
+      if (f.value.trim() && f.value.trim() !== name) ask("서비스명 칸에 이미 쓴 내용이 있습니다. ‘" + name + "’(으)로 바꿀까요?", "바꾸기", "ok").then(y => y && apply());
+      else apply();
+    });
+    cards.appendChild(c);
+  });
+
+  // checkboxes + perspective rows
+  const checks = $("#checks");
+  VIEWS.forEach((v, i) => {
+    const l = document.createElement("label");
+    l.innerHTML = '<input type="checkbox" id="f-v' + i + '" data-f="v' + i + '"><span></span>';
+    l.querySelector("span").textContent = v;
+    checks.appendChild(l);
+  });
+  const persp = $("#persp");
+  for (let i = 1; i <= 5; i++) {
+    const tr = document.createElement("tr");
+    const lab = i === 5 ? "관점5(선택):" : "관점" + i + ":";
+    tr.innerHTML = '<th scope="row"><div class="pl"><span>' + lab + '</span> <input class="field mini" id="f-p' + i + 'v" data-f="p' + i + 'v" autocomplete="off" aria-label="관점' + i + ' 이름" placeholder="관점"></div>' +
+      '<div class="nm">(<input class="field mini" id="f-p' + i + 'n" data-f="p' + i + 'n" autocomplete="off" aria-label="관점' + i + ' 담당자 이름" placeholder="이름">)</div></th>' +
+      '<td><textarea class="field" id="f-p' + i + 't" data-f="p' + i + 't" rows="3" aria-label="관점' + i + ' 무엇이 문제인가"></textarea></td>';
+    persp.appendChild(tr);
+  }
+
+  const fields = Array.from(document.querySelectorAll("[data-f]"));
+  function grow(t) { if (t.tagName !== "TEXTAREA") return; t.style.height = "auto"; t.style.height = t.scrollHeight + "px"; }
+
+  // state
+  function collect() { const o = {}; fields.forEach(f => { o[f.dataset.f] = f.type === "checkbox" ? f.checked : f.value; }); return o; }
+  let saveTimer;
+  function save() { clearTimeout(saveTimer); saveTimer = setTimeout(() => { try { localStorage.setItem(KEY, JSON.stringify(collect())); setStatus("자동 저장됨 · " + new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })); } catch (e) { setStatus("이 브라우저에서는 자동 저장이 되지 않아요. 창을 닫기 전에 PDF로 저장하세요."); } }, 400); }
+  function load() { let o = null; try { o = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {} if (!o) return; fields.forEach(f => { const v = o[f.dataset.f]; if (v === undefined) return; if (f.type === "checkbox") f.checked = !!v; else f.value = v; }); }
+  function setStatus(s) { $("#status").textContent = s; }
+  load();
+  if (!$("#f-date").value) { const d = new Date(); $("#f-date").value = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  fields.forEach(f => { f.addEventListener("input", () => { grow(f); save(); }); f.addEventListener("change", save); });
+  const regrow = () => fields.forEach(grow);
+  requestAnimationFrame(regrow);
+  window.addEventListener("resize", regrow);
+  if (document.fonts) document.fonts.ready.then(regrow);
+
+  // toast + in-page confirm
+  let tt;
+  function toast(msg) { let t = $(".toast"); if (!t) { t = document.createElement("div"); t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); } t.textContent = msg; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => { t.hidden = true; }, 3200); }
+  function ask(msg, yes, kind) {
+    return new Promise(res => {
+      const o = document.createElement("div"); o.className = "overlay";
+      o.innerHTML = '<div class="dialog" role="dialog" aria-modal="true"><div class="m"></div><div class="acts"><button class="btn" type="button" data-a="0">취소</button><button class="btn ' + (kind || "ok") + '" type="button" data-a="1"></button></div></div>';
+      o.querySelector(".m").textContent = msg; o.querySelector('[data-a="1"]').textContent = yes;
+      o.addEventListener("click", e => { const a = e.target.dataset && e.target.dataset.a; if (a === undefined && e.target !== o) return; o.remove(); res(a === "1"); });
+      document.body.appendChild(o); o.querySelector('[data-a="1"]').focus();
+    });
+  }
+
+  $("#reset").addEventListener("click", async () => {
+    if (!(await ask("작성한 내용을 모두 지울까요? 지운 내용은 되돌릴 수 없습니다.", "모두 지우기", "danger"))) return;
+    fields.forEach(f => { if (f.type === "checkbox") f.checked = false; else if (f.dataset.f !== "date") f.value = ""; });
+    regrow(); try { localStorage.removeItem(KEY); } catch (e) {} setStatus("작성 내용을 지웠습니다."); window.scrollTo({ top: 0 });
+  });
+
+  // downloads capability (artifact viewer); null outside it
+  const dlReady = (window.claude && typeof window.claude.use === "function") ? window.claude.use("downloads").catch(() => null) : Promise.resolve(null);
+
+  function fmtDate(v) { if (!v) return ""; const [y, m, d] = v.split("-"); return y + ". " + Number(m) + ". " + Number(d) + "."; }
+
+  // Make a static copy of each page where every input shows as plain text.
+  function buildPrintPages() {
+    const stage = $("#stage"); stage.innerHTML = "";
+    const data = collect();
+    return Array.from(document.querySelectorAll("#desk .paper")).map(p => {
+      const c = p.cloneNode(true);
+      c.querySelectorAll("[data-noprint]").forEach(n => n.remove());
+      c.querySelectorAll("[data-f]").forEach(n => {
+        const k = n.dataset.f; let r;
+        if (n.type === "checkbox") { r = document.createElement("span"); r.className = "cbx" + (data[k] ? " on" : ""); }
+        else {
+          r = document.createElement("div");
+          const inTable = n.closest(".info");
+          r.className = "fv" + (n.classList.contains("mini") ? " inline" : "") + (inTable ? " cell" : "");
+          r.textContent = k === "date" ? fmtDate(data[k]) : (data[k] || "");
+          if (n.classList.contains("mini") && !r.textContent) r.innerHTML = "&nbsp;";
+        }
+        n.replaceWith(r);
+      });
+      stage.appendChild(c);
+      return c;
+    });
+  }
+
+  function missing() {
+    const need = { name: "이름", sid: "학번", service: "서비스명", worry: "활동 1-2", dilemma: "딜레마 상황" };
+    const d = collect(); return Object.keys(need).filter(k => !String(d[k] || "").trim()).map(k => need[k]);
+  }
+
+  async function makePdf() {
+    if (document.fonts) await document.fonts.ready;
+    const pages = buildPrintPages();
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ unit: "mm", format: "a4", compress: true });
+    const W = 210, H = 297, PX_H = 1123;
+    let first = true;
+    for (const pg of pages) {
+      const canvas = await html2canvas(pg, { scale: 2.5, backgroundColor: "#ffffff", windowWidth: 1100, useCORS: true, logging: false });
+      const pageHpx = canvas.width * (H / W);
+      if (canvas.height <= pageHpx * 1.25) {
+        // fits on one sheet (shrink slightly if text ran long)
+        const s = Math.min(1, pageHpx / canvas.height);
+        const w = W * s, h = (canvas.height / canvas.width) * W * s;
+        if (!first) pdf.addPage(); first = false;
+        pdf.addImage(canvas.toDataURL("image/jpeg", 0.92), "JPEG", (W - w) / 2, 0, w, h);
+      } else {
+        // very long: continue on extra sheets
+        for (let y = 0; y < canvas.height; y += pageHpx) {
+          const part = document.createElement("canvas"); part.width = canvas.width; part.height = Math.min(pageHpx, canvas.height - y);
+          const cx = part.getContext("2d"); cx.fillStyle = "#fff"; cx.fillRect(0, 0, part.width, part.height); cx.drawImage(canvas, 0, -y);
+          if (!first) pdf.addPage(); first = false;
+          pdf.addImage(part.toDataURL("image/jpeg", 0.92), "JPEG", 0, 0, W, part.height / canvas.width * W);
+        }
+      }
+    }
+    $("#stage").innerHTML = "";
+    return pdf;
+  }
+
+  const btn = $("#save");
+  btn.addEventListener("click", async () => {
+    const miss = missing();
+    if (miss.length && !(await ask("아직 비어 있는 칸이 있어요: " + miss.join(", ") + ". 그래도 PDF로 저장할까요?", "그대로 저장", "ok"))) return;
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "만드는 중…";
+    try {
+      const pdf = await makePdf();
+      const d = collect();
+      const nm = [d.class, d.sid, d.name].map(s => String(s || "").trim().replace(/[\\/:*?"<>|]/g, "")).filter(Boolean).join("_");
+      const filename = (nm ? nm + "_" : "") + "인공지능윤리딜레마_1차시.pdf";
+      const blob = pdf.output("blob");
+      const dl = await dlReady;
+      if (dl) {
+        try { await dl.save({ filename, data: blob }); toast("PDF를 저장했습니다."); }
+        catch (e) {
+          if (e && e.code === "declined") toast("저장을 취소했습니다.");
+          else if (e && e.code === "rate_limited") toast("저장 창이 이미 열려 있어요. 잠시 후 다시 눌러 주세요.");
+          else toast("이 화면에서는 파일 저장이 막혀 있어요. 다른 브라우저에서 열어 다시 시도해 주세요.");
+        }
+      } else {
+        pdf.save(filename); toast("PDF를 내려받았습니다.");
+      }
+    } catch (e) {
+      console.error(e); toast("PDF를 만들지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.");
+    } finally { btn.disabled = false; btn.textContent = label; }
+  });
+})();
+</script>
+</body></html>
